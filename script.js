@@ -34,7 +34,7 @@ var answer3 = document.getElementById("answer3");
 var myBtn = document.querySelector("button");
 
 // A counter to tell you the correct number of answers
-let answerCorrect = 3;
+let finalScore = 3;
 
 // after the event fires, remove the event listeners
 var removeListener1 = function (){
@@ -49,41 +49,65 @@ var removeListener2 = function (){
     answer3.removeEventListener("click", answeredTwo1False);
 };
 
-
+var removeListener3 = function (){
+    answer1.removeEventListener("click", answeredThree1Correct);
+    answer2.removeEventListener("click", answeredThree1False);
+    answer3.removeEventListener("click", answeredThree1False);
+};
 
 // if you got the 1st answer wrong... 
 var answeredOne1False = function(){
-    answerCorrect--;
+    finalScore--;
     choiceDisplay.textContent = "You Chose Unwisely!";
     removeListener1();
     setTimeout(askQuestion2, 2500);
-    console.log(answerCorrect);
+    console.log(finalScore);
     };
 
 // if you got the 1st answer correct
 var answeredOne1Correct = function(){
-    choiceDisplay.textContent = "You Chose Correct!";
+    choiceDisplay.textContent = "You Are Correct!";
     removeListener1();
     setTimeout(askQuestion2, 2500);
-    console.log(answerCorrect);
+    console.log(finalScore);
 };
 
 // if you got the 2nd answer wrong
 var answeredTwo1False = function (){
-    answerCorrect--;
-    choiceDisplay.textContent = "You Chose Unwisely";
+    finalScore--;
+    choiceDisplay.textContent = "You Chose Unwisely!";
     removeListener2();
     setTimeout(askQuestion3, 2500);
-    console.log(answerCorrect);
+    console.log(finalScore);
 };
 
 // if you got the 2nd answer correct
 var answeredTwo1Correct = function (){
-    choiceDisplay.textContent = "You Chose Wisely!";
+    choiceDisplay.textContent = "You Are Correct!";
     removeListener2();
     setTimeout(askQuestion3, 2500);
-    console.log(answerCorrect);
+    console.log(finalScore);
 };
+
+// if you got the 3rd answer wrong
+var answeredThree1False = function (){
+    choiceDisplay.textContent = "You Chose Unwisely!";
+    finalScore--;
+    removeListener3();
+    console.log(finalScore);
+    myBtn.textContent = "Try Again?";
+};
+
+// if you got the 3rd answer correct
+var answeredThree1Correct = function (){
+    choiceDisplay.textContent = "You Are Correct";
+    removeListener3();
+    console.log(finalScore);
+}
+
+
+
+
 
 
 // var startingTime = 1;
