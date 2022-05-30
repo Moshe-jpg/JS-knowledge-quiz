@@ -59,6 +59,8 @@ main h2 {
 .answer {
     background: var(--third);
     margin-top: 22px;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 

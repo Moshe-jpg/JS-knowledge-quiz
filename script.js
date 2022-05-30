@@ -1,3 +1,5 @@
+
+// An array with the questions and answers
 var questions = [
     {
       question1:  "What is a Javascipt Array?",
@@ -18,6 +20,38 @@ var questions = [
       answer3: "A piece of code which will store any data if entered by the user"
     }
 ];
+// Where it will tell you if you got the answer wrong or right
+var choiceDisplay = document.getElementById("choice-display");
+// Where the questions and answers will be displayed
+var question1 = document.querySelector(".question");
+var answer1 = document.getElementById("answer1");
+var answer2 = document.getElementById("answer2");
+var answer3 = document.getElementById("answer3");
+// The button to start the quiz
+var myBtn = document.querySelector("button");
+// A counter to tell you the correct number of answers
+let answerCorrect = 3;
+
+var removeListener = function (){
+    answer1.removeEventListener("click", answeredOne1False);
+    answer2.removeEventListener("click", answeredOne1False);
+    answer3.removeEventListener("click", answeredOne1Correct);
+}
+
+var answeredOne1False = function(){
+    answerCorrect--;
+    choiceDisplay.textContent = "You Chose Unwisely!";
+    removeListener();
+    setTimeout(askQuestion2, 2500);
+    console.log(answerCorrect);
+    };
+var answeredOne1Correct = function(){
+    choiceDisplay.textContent = "You Chose Correct!";
+    removeListener();
+    setTimeout(askQuestion2, 2500);
+    console.log(answerCorrect);
+};
+
 
 // var startingTime = 1;
 // let time = startingTime * 60;
@@ -34,24 +68,31 @@ var questions = [
 //     time--;
 // };
 
-var askQuestions = function (){
-    var question1 = document.querySelector(".question");
+var askQuestion1 = function (){
     question1.textContent = questions[0].question1;
-    var answer1 = document.getElementById("answer1");
     answer1.textContent = questions[0].answer1;
-    var answer2 = document.getElementById("answer2");
     answer2.textContent = questions[0].answer2;
-    var answer3 = document.getElementById("answer3");
     answer3.textContent = questions[0].answer3;
-    
+    var clickOne1False = answer1.addEventListener("click", answeredOne1False);
+    var clickOne2False = answer2.addEventListener("click", answeredOne1False);
+    var clickOne3Correct = answer3.addEventListener("click", answeredOne1Correct);
+}
+
+var askQuestion2 = function (){
+    question1.textContent = questions[1].question2;
+    answer1.textContent = questions[1].answer1;
+    answer2.textContent = questions[1].answer2;
+    answer3.textContent = questions[1].answer3;
+
 }
 
 var startQuiz = function (){
     
 
 
-    askQuestions();
+    askQuestion1();
     // updateTime();
+    
 }
 
-document.querySelector("button").addEventListener("click", startQuiz);
+myBtn.addEventListener("click", startQuiz);
