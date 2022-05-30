@@ -31,16 +31,19 @@
 
 main h2 {
     color: var(--second);
-    padding-top: 5%;
+    margin-top: 15px;
     font-family: 'Spline Sans Mono', monospace;
+    font-size: 32px;
 }
 /* timer style */
 #count-down {
     color: var(--fourth);
+    font-size: 22px;
+    margin-top: 10px;
 }
 /* question and answers */
 .quiz {
-    padding-top: 5%;
+    margin-top: 20px;
 }
 
 .question, .answer {

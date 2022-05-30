@@ -21,6 +21,25 @@ var questions = [
     }
 ];
 
+// the timer function begins when the start button is pressed
+var countDown = function (){
+    var timer = document.getElementById("count-down");
+    var counter = 30;
+    setInterval(function(){
+        counter--;
+
+        if (counter >= 0){
+            timer.innerHTML = counter;
+        };
+
+        if (counter === 0){
+            timer.innerHTML = "Quiz Is Over";
+        };
+
+    }, 1000);
+};
+
+
 // Where it will tell you if you got the answer wrong or right
 var choiceDisplay = document.getElementById("choice-display");
 
@@ -96,6 +115,7 @@ var answeredThree1False = function (){
     removeListener3();
     console.log(finalScore);
     myBtn.textContent = "Try Again?";
+    myBtn.disabled = false;
 };
 
 // if you got the 3rd answer correct
@@ -103,30 +123,14 @@ var answeredThree1Correct = function (){
     choiceDisplay.textContent = "You Are Correct";
     removeListener3();
     console.log(finalScore);
+    myBtn.textContent = "Try Again?";
+    myBtn.disabled = false;
 }
-
-
-
-
-
-
-// var startingTime = 1;
-// let time = startingTime * 60;
-// var countDownEl = document.getElementById("count-down");
-
-
-
-// var updateTime = function (){
-//     const minutes = Math.floor(time / 60);
-//     let seconds = time % 60;
-//     countDownEl.innerHTML =  `${minutes}:${seconds}`;
-//     setInterval(updateTime, 1000);
-//     clearInterval();
-//     time--;
-// };
 
 // question 1...
 var askQuestion1 = function (){
+    myBtn.textContent = "Please Choose 👆";
+    myBtn.disabled = true;
     question1.textContent = questions[0].question1;
     answer1.textContent = questions[0].answer1;
     answer2.textContent = questions[0].answer2;
@@ -159,9 +163,13 @@ var askQuestion3 = function (){
 };
 
 
+
+
+// quiz begins when this function gets called
 var startQuiz = function (){
+    
+    countDown();
     askQuestion1();
-    // updateTime();
     
 }
 
