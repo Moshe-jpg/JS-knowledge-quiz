@@ -22,9 +22,11 @@ var questions = [
 ];
 
 // the timer function begins when the start button is pressed
+var timer = document.getElementById("count-down");
+var counter = 30;
+
 var countDown = function (){
-    var timer = document.getElementById("count-down");
-    var counter = 30;
+    
     setInterval(function(){
         counter--;
 
@@ -32,8 +34,23 @@ var countDown = function (){
             timer.innerHTML = counter;
         };
 
-        if (counter === 0){
-            timer.innerHTML = "Quiz Is Over";
+        if (counter <= 3){
+            timer.style.color = "var(--fifth)";
+            timer.style.fontWeight = "600";
+        };
+
+        if (counter == 0){
+            answer1.textContent = "";
+            answer2.textContent = "";
+            answer3.textContent = "";
+            removeListener1();
+            removeListener2();
+            removeListener3();
+            choiceDisplay.textContent = "Time Is Up";
+            myBtn.textContent = "Try Again?";
+            myBtn.addEventListener("click", function() {
+                startQuiz();
+            });
         };
 
     }, 1000);
@@ -48,6 +65,7 @@ var question1 = document.querySelector(".question");
 var answer1 = document.getElementById("answer1");
 var answer2 = document.getElementById("answer2");
 var answer3 = document.getElementById("answer3");
+
 
 // The button to start the quiz
 var myBtn = document.querySelector("button");
@@ -77,7 +95,8 @@ var removeListener3 = function (){
 // if you got the 1st answer wrong... 
 var answeredOne1False = function(){
     finalScore--;
-    choiceDisplay.textContent = "You Chose Unwisely!";
+    counter = counter - 5;
+    choiceDisplay.textContent = "You Chose Unwisely! 5 Seconds Deducted";
     removeListener1();
     setTimeout(askQuestion2, 2500);
     console.log(finalScore);
@@ -94,7 +113,8 @@ var answeredOne1Correct = function(){
 // if you got the 2nd answer wrong
 var answeredTwo1False = function (){
     finalScore--;
-    choiceDisplay.textContent = "You Chose Unwisely!";
+    counter = counter - 5;
+    choiceDisplay.textContent = "You Chose Unwisely! 5 Seconds Deducted";
     removeListener2();
     setTimeout(askQuestion3, 2500);
     console.log(finalScore);
@@ -109,22 +129,37 @@ var answeredTwo1Correct = function (){
 };
 
 // if you got the 3rd answer wrong
-var answeredThree1False = function (){
-    choiceDisplay.textContent = "You Chose Unwisely!";
-    finalScore--;
+var answeredThree1False = function (){ 
+    counter = counter * 0;
+    if (counter === 0){
+        timer.innerHTML = "Quiz Is Over";
+        choiceDisplay.innerHTML = "Your Final Score Is " + finalScore + " Out Of 3!";
+    };
     removeListener3();
     console.log(finalScore);
     myBtn.textContent = "Try Again?";
     myBtn.disabled = false;
+    myBtn.addEventListener("click", function() {
+        startQuiz();
+    });
 };
 
 // if you got the 3rd answer correct
 var answeredThree1Correct = function (){
     choiceDisplay.textContent = "You Are Correct";
     removeListener3();
+    counter = counter * 0;
+    counter = counter * 0;
+    if (counter === 0){
+        timer.innerHTML = "Quiz Is Over";
+        choiceDisplay.innerHTML = "Your Final Score Is " + finalScore + " Out Of 3!";
+    };
     console.log(finalScore);
     myBtn.textContent = "Try Again?";
     myBtn.disabled = false;
+    myBtn.addEventListener("click", function() {
+        startQuiz();
+    });
 }
 
 // question 1...
@@ -167,8 +202,9 @@ var askQuestion3 = function (){
 
 // quiz begins when this function gets called
 var startQuiz = function (){
+    counter = 30;
+    countDown();  
     
-    countDown();
     askQuestion1();
     
 }
