@@ -142,12 +142,11 @@ var answeredTwo1Correct = function (){
 // if you got the 3rd answer wrong
 var answeredThree1False = function (){ 
     counter = counter * 0;
-    if (counter === 0){
-        timer.innerHTML = "Quiz Is Over";
-        choiceDisplay.innerHTML = "Your Final Score Is " + finalScore + " Out Of 3!";
-    };
+    timer.innerHTML = "Quiz Is Over";
+    choiceDisplay.innerHTML = "Your Final Score Is " + finalScore + " Out Of 3!";
     removeListener3();
     console.log(finalScore);
+    saveScore();
     myBtn.textContent = "Try Again?";
     myBtn.disabled = false;
     myBtn.addEventListener("click", function() {
@@ -160,18 +159,16 @@ var answeredThree1Correct = function (){
     choiceDisplay.textContent = "You Are Correct";
     removeListener3();
     counter = counter * 0;
-    if (counter === 0){
         timer.innerHTML = "Quiz Is Over";
         choiceDisplay.innerHTML = "Your Final Score Is " + finalScore + " Out Of 3!";
         console.log(finalScore);
+        saveScore();
         counter = counter * 0;
         myBtn.textContent = "Try Again?";
         myBtn.disabled = false;
         myBtn.addEventListener("click", function() {
         tryAgain();
     });
-    };
-    
 }
 
 // question 1...
@@ -216,6 +213,10 @@ var askQuestion3 = function (){
 var startQuiz = function (){  
     countDown();
     askQuestion1();
+}
+
+var saveScore = function (){
+    localStorage.setItem("finalScore", JSON.stringify(finalScore));
 }
 
 myBtn.addEventListener("click", startQuiz);
