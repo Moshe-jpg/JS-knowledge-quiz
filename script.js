@@ -14,7 +14,7 @@ var questions = [
       answer3: "2005"
     },
     {
-      question3: "What is a JavaScript If statement?",
+      question3: "What is a JavaScript 'If' statement?",
       answer1: "A piece of code that will be executed based on if conditions are true or false",
       answer2: "A piece of code which allows you to complete math functions",
       answer3: "A piece of code which will store any data if entered by the user"
@@ -40,6 +40,7 @@ var countDown = function (){
         };
 
         if (counter == 0){
+            question1.textContent = "";
             answer1.textContent = "";
             answer2.textContent = "";
             answer3.textContent = "";
@@ -48,12 +49,22 @@ var countDown = function (){
             removeListener3();
             choiceDisplay.textContent = "Time Is Up";
             myBtn.textContent = "Try Again?";
+            clearInterval(countDown);
             myBtn.addEventListener("click", function() {
-                startQuiz();
+                tryAgain();
+                
             });
         };
 
     }, 1000);
+};
+
+// a restart quiz feature
+var tryAgain = function (){
+    counter = counter * 0 + 30;
+    finalScore = finalScore * 0 + 3;
+    timer.style.color = "var(--fourth)";
+    startQuiz();
 };
 
 
@@ -140,7 +151,7 @@ var answeredThree1False = function (){
     myBtn.textContent = "Try Again?";
     myBtn.disabled = false;
     myBtn.addEventListener("click", function() {
-        startQuiz();
+        tryAgain();
     });
 };
 
@@ -149,17 +160,18 @@ var answeredThree1Correct = function (){
     choiceDisplay.textContent = "You Are Correct";
     removeListener3();
     counter = counter * 0;
-    counter = counter * 0;
     if (counter === 0){
         timer.innerHTML = "Quiz Is Over";
         choiceDisplay.innerHTML = "Your Final Score Is " + finalScore + " Out Of 3!";
-    };
-    console.log(finalScore);
-    myBtn.textContent = "Try Again?";
-    myBtn.disabled = false;
-    myBtn.addEventListener("click", function() {
-        startQuiz();
+        console.log(finalScore);
+        counter = counter * 0;
+        myBtn.textContent = "Try Again?";
+        myBtn.disabled = false;
+        myBtn.addEventListener("click", function() {
+        tryAgain();
     });
+    };
+    
 }
 
 // question 1...
@@ -201,12 +213,9 @@ var askQuestion3 = function (){
 
 
 // quiz begins when this function gets called
-var startQuiz = function (){
-    counter = 30;
-    countDown();  
-    
+var startQuiz = function (){  
+    countDown();
     askQuestion1();
-    
 }
 
 myBtn.addEventListener("click", startQuiz);

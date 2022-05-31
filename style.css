@@ -65,6 +65,7 @@ main h2 {
     margin-top: 22px;
     display: flex;
     flex-wrap: wrap;
+    font-size: 22px;
 }
 
 
@@ -87,4 +88,37 @@ main h2 {
 }
 .my-btn:hover {
 	background-color:#5cbf2a;
+}
+
+@media screen and (max-device-width: 500px){
+    .question {
+        height: 6vh;
+    }
+    
+    .answer {
+        height: 10vh;
+    }
+
+    .question, .answer {
+        font-size: 16px;;
+    }
+
+    .answer {
+        margin-top: 1vh;
+    }
+
+    main h2 {
+        margin-top: 25px;
+        font-size: 24px;
+    }
+
+    .main-content {
+        height: 95vh;
+        width: 95vw;
+    }
+
+    #countdown {
+        font-size: 18px;
+        margin-top: 1vh;
+    }
 }
