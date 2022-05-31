@@ -165,6 +165,12 @@ var answeredThree1False = function (){
     removeListener3();
     console.log(finalScore);
     saveNames();
+    if (counter === 0){
+        timer.innerHTML = "Quiz Is Over";
+        choiceDisplay.innerHTML = "Your Final Score Is " + finalScore + " Out Of 3!";
+    };
+    removeListener3();
+    console.log(finalScore);
     myBtn.textContent = "Try Again?";
     myBtn.disabled = false;
     myBtn.addEventListener("click", function() {
@@ -189,7 +195,8 @@ var answeredThree1Correct = function (){
     myBtn.addEventListener("click", function() {
     tryAgain();
     });
-}
+    };
+    
 
 // question 1...
 var askQuestion1 = function (){
