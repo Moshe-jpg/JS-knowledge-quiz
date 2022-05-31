@@ -64,6 +64,7 @@ var tryAgain = function (){
     counter = counter * 0 + 30;
     finalScore = finalScore * 0 + 3;
     timer.style.color = "var(--fourth)";
+    textInput.style.display = "none";
     startQuiz();
 };
 
@@ -72,6 +73,8 @@ var tryAgain = function (){
 var choiceDisplay = document.getElementById("choice-display");
 
 // Where the questions and answers will be displayed
+var textInput = document.getElementById("text-input");
+textValue = textInput.value;
 var question1 = document.querySelector(".question");
 var answer1 = document.getElementById("answer1");
 var answer2 = document.getElementById("answer2");
@@ -79,7 +82,20 @@ var answer3 = document.getElementById("answer3");
 
 
 // The button to start the quiz
-var myBtn = document.querySelector("button");
+var myBtn = document.querySelector(".my-btn");
+
+// array which will hold the submitted username initials
+var names = [];
+
+// Submit btn
+var initBtn = document.querySelector("#initial-submit");
+
+// Using the event listener on the bottom of the page, we will push the
+var pushNames = function (){
+    event.preventDefault();
+    names.push(textValue)
+    console.log(names);
+}
 
 // A counter to tell you the correct number of answers
 let finalScore = 3;
@@ -144,9 +160,11 @@ var answeredThree1False = function (){
     counter = counter * 0;
     timer.innerHTML = "Quiz Is Over";
     choiceDisplay.innerHTML = "Your Final Score Is " + finalScore + " Out Of 3!";
+    textInput.style.display = "initial";
+    initBtn.style.display = "initial";
     removeListener3();
     console.log(finalScore);
-    saveScore();
+    saveNames();
     myBtn.textContent = "Try Again?";
     myBtn.disabled = false;
     myBtn.addEventListener("click", function() {
@@ -158,16 +176,18 @@ var answeredThree1False = function (){
 var answeredThree1Correct = function (){
     choiceDisplay.textContent = "You Are Correct";
     removeListener3();
+    textInput.style.display = "initial";
+    initBtn.style.display = "initial";
     counter = counter * 0;
-        timer.innerHTML = "Quiz Is Over";
-        choiceDisplay.innerHTML = "Your Final Score Is " + finalScore + " Out Of 3!";
-        console.log(finalScore);
-        saveScore();
-        counter = counter * 0;
-        myBtn.textContent = "Try Again?";
-        myBtn.disabled = false;
-        myBtn.addEventListener("click", function() {
-        tryAgain();
+    timer.innerHTML = "Quiz Is Over";
+    choiceDisplay.innerHTML = "Your Final Score Is " + finalScore + " Out Of 3!";
+    console.log(finalScore);
+    saveNames();
+    counter = counter * 0;
+    myBtn.textContent = "Try Again?";
+    myBtn.disabled = false;
+    myBtn.addEventListener("click", function() {
+    tryAgain();
     });
 }
 
@@ -215,8 +235,26 @@ var startQuiz = function (){
     askQuestion1();
 }
 
-var saveScore = function (){
-    localStorage.setItem("finalScore", JSON.stringify(finalScore));
+// save names to local storage
+var saveNames = function (){
+    localStorage.setItem("names", JSON.stringify(names));
 }
 
+// load the names from local storage
+var loadNames = function(){
+    var savedNames = localStorage.getItem("names");
+    if (!savedNames){
+        return false;
+    }
+    console.log("Saved names found");
+
+    savedNames = JSON.parse(savedNames);
+
+    for (i = 0; i < savedNames.length; i++){
+        createTaskEl(savedNames[i]);
+    }
+    
+};
+
 myBtn.addEventListener("click", startQuiz);
+initBtn.addEventListener("click", pushNames);
