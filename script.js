@@ -50,10 +50,7 @@ var countDown = function (){
             choiceDisplay.textContent = "Time Is Up";
             myBtn.textContent = "Try Again?";
             clearInterval(countDown);
-            myBtn.addEventListener("click", function() {
-                tryAgain();
-                
-            });
+            myBtn.addEventListener("click", tryAgain());
         };
 
     }, 1000);
@@ -244,15 +241,17 @@ var askQuestion3 = function (){
 var startQuiz = function (){  
     countDown();
     askQuestion1();
+    loadScore();
+    loadNames();
 }
 
 // save final score to local storage
-var saveScore = function (){
+let saveScore = function (){
     localStorage.setItem("finalScoreArray", JSON.stringify(finalScoreArray));
 }
 
 var loadScore = function (){
-    var savedScore = localStorage.getItem("finalScoreArray");
+    let savedScore = localStorage.getItem("finalScoreArray");
     if (!savedScore){
         return false;
     }
@@ -266,13 +265,13 @@ var loadScore = function (){
 }
 
 // save names to local storage
-var saveNames = function (){
+let saveNames = function (){
     localStorage.setItem("names", JSON.stringify(names));
 }
 
 // load the names from local storage
 var loadNames = function(){
-    var savedNames = localStorage.getItem("names");
+    let savedNames = localStorage.getItem("names");
     if (!savedNames){
         return false;
     }
