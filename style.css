@@ -156,6 +156,13 @@ main h2 {
 
     .initial-btn {
         margin-top: 1vh;
+        font-size:16px;
+        height: 25px;
+    }
+
+    .my-btn {
+        font-size: 16px;
+        height: 40px;
     }
 }
 
@@ -182,5 +189,12 @@ main h2 {
 
     .initial-btn {
         margin-top: 1vh;
+        font-size:16px;
+        height: 25px;
+    }
+
+    .my-btn {
+        font-size: 16px;
+        height: 40px;
     }
 }
