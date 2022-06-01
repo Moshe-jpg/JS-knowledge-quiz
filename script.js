@@ -80,10 +80,7 @@ var answer3 = document.getElementById("answer3");
 var myBtn = document.querySelector(".my-btn");
 
 // array which will hold the submitted username initials
-var names = [];
-
-// array which will store the final score
-var finalScoreArray = [];
+var objects = [];
 
 // Submit btn
 var initBtn = document.querySelector("#initial-submit");
@@ -93,11 +90,9 @@ var textInput = document.getElementById("text-input");
 var pushNames = function (){
     event.preventDefault();
     var textValue = textInput.value;
-    names.push(textValue + " " + finalScore);
-    finalScoreArray.push(finalScore);
-    saveNames();
-    saveScore();
-    console.log(names);
+    objects.push(textValue + " " + finalScore);
+    saveObjects();
+    console.log(objects);
 }
 
 // A counter to tell you the correct number of answers
@@ -161,18 +156,15 @@ var answeredTwo1Correct = function (){
 // if you got the 3rd answer wrong
 var answeredThree1False = function (){ 
     counter = counter * 0;
+    if (answeredOne1False && answeredTwo1False){
+        finalScore = 0;
+    }
     timer.innerHTML = "Quiz Is Over";
     choiceDisplay.innerHTML = "Your Final Score Is " + finalScore + " Out Of 3!";
     textInput.style.display = "initial";
     initBtn.style.display = "initial";
-    removeListener3();
     console.log(finalScore);
-    if (counter === 0){
-        timer.innerHTML = "Quiz Is Over";
-        choiceDisplay.innerHTML = "Your Final Score Is " + finalScore + " Out Of 3!";
-    };
     removeListener3();
-    console.log(finalScore);
     myBtn.textContent = "Try Again?";
     myBtn.disabled = false;
     myBtn.addEventListener("click", function() {
@@ -183,14 +175,13 @@ var answeredThree1False = function (){
 // if you got the 3rd answer correct
 var answeredThree1Correct = function (){
     choiceDisplay.textContent = "You Are Correct";
+    counter = counter * 0;
     removeListener3();
     textInput.style.display = "initial";
     initBtn.style.display = "initial";
-    counter = counter * 0;
     timer.innerHTML = "Quiz Is Over";
     choiceDisplay.innerHTML = "Your Final Score Is " + finalScore + " Out Of 3!";
     console.log(finalScore);
-    counter = counter * 0;
     myBtn.textContent = "Try Again?";
     myBtn.disabled = false;
     myBtn.addEventListener("click", function() {
@@ -234,56 +225,38 @@ var askQuestion3 = function (){
     var clickThree1False = answer3.addEventListener("click", answeredThree1False);
 };
 
+// Localstorage.setitem finds the item in local storage and replaces it with the new item you are trying to set.
 
+// You need to get the item from local storage and save it to a variable.
+var getObjects = localStorage.getItem("objects", JSON.stringify(objects));
 
+// Then append the data you want to add to the item that you retrieved from local storage.
+
+// save final score to local storage
+var saveObjects = function (){
+   localStorage.setItem("objects", JSON.stringify(objects));
+}
+
+var loadObjects = function (){
+    var savedObjects = localStorage.getItem("objects", JSON.stringify(objects));
+    if (!savedObjects){
+        return false;
+    }
+    console.log("Saved objects found");
+
+    savedObjects = JSON.parse(savedObjects);
+
+    for (i = 0; i < savedObjects.length; i++){
+        console.log(savedObjects[i]);
+    }
+}
 
 // quiz begins when this function gets called
 var startQuiz = function (){  
     countDown();
     askQuestion1();
-    loadScore();
-    loadNames();
+    loadObjects();
 }
-
-// save final score to local storage
-let saveScore = function (){
-    localStorage.setItem("finalScoreArray", JSON.stringify(finalScoreArray));
-}
-
-var loadScore = function (){
-    let savedScore = localStorage.getItem("finalScoreArray");
-    if (!savedScore){
-        return false;
-    }
-    console.log("Saved scores found");
-
-    savedScore = JSON.parse(savedScore);
-
-    for (i = 0; i < savedScore.length; i++){
-        console.log(savedScore[i]);
-    }
-}
-
-// save names to local storage
-let saveNames = function (){
-    localStorage.setItem("names", JSON.stringify(names));
-}
-
-// load the names from local storage
-var loadNames = function(){
-    let savedNames = localStorage.getItem("names");
-    if (!savedNames){
-        return false;
-    }
-    console.log("Saved names found");
-
-    savedNames = JSON.parse(savedNames);
-
-    for (i = 0; i < savedNames.length; i++){
-        console.log(savedNames[i]);
-    }
-    
-};
 
 myBtn.addEventListener("click", startQuiz);
 initBtn.addEventListener("click", pushNames);
