@@ -73,8 +73,6 @@ var tryAgain = function (){
 var choiceDisplay = document.getElementById("choice-display");
 
 // Where the questions and answers will be displayed
-var textInput = document.getElementById("text-input");
-textValue = textInput.value;
 var question1 = document.querySelector(".question");
 var answer1 = document.getElementById("answer1");
 var answer2 = document.getElementById("answer2");
@@ -87,13 +85,21 @@ var myBtn = document.querySelector(".my-btn");
 // array which will hold the submitted username initials
 var names = [];
 
+// array which will store the final score
+var finalScoreArray = [];
+
 // Submit btn
 var initBtn = document.querySelector("#initial-submit");
+var textInput = document.getElementById("text-input");
 
 // Using the event listener on the bottom of the page, we will push the
 var pushNames = function (){
     event.preventDefault();
-    names.push(textValue)
+    var textValue = textInput.value;
+    names.push(textValue + " " + finalScore);
+    finalScoreArray.push(finalScore);
+    saveNames();
+    saveScore();
     console.log(names);
 }
 
@@ -164,7 +170,6 @@ var answeredThree1False = function (){
     initBtn.style.display = "initial";
     removeListener3();
     console.log(finalScore);
-    saveNames();
     if (counter === 0){
         timer.innerHTML = "Quiz Is Over";
         choiceDisplay.innerHTML = "Your Final Score Is " + finalScore + " Out Of 3!";
@@ -188,7 +193,6 @@ var answeredThree1Correct = function (){
     timer.innerHTML = "Quiz Is Over";
     choiceDisplay.innerHTML = "Your Final Score Is " + finalScore + " Out Of 3!";
     console.log(finalScore);
-    saveNames();
     counter = counter * 0;
     myBtn.textContent = "Try Again?";
     myBtn.disabled = false;
@@ -242,6 +246,25 @@ var startQuiz = function (){
     askQuestion1();
 }
 
+// save final score to local storage
+var saveScore = function (){
+    localStorage.setItem("finalScoreArray", JSON.stringify(finalScoreArray));
+}
+
+var loadScore = function (){
+    var savedScore = localStorage.getItem("finalScoreArray");
+    if (!savedScore){
+        return false;
+    }
+    console.log("Saved scores found");
+
+    savedScore = JSON.parse(savedScore);
+
+    for (i = 0; i < savedScore.length; i++){
+        console.log(savedScore[i]);
+    }
+}
+
 // save names to local storage
 var saveNames = function (){
     localStorage.setItem("names", JSON.stringify(names));
@@ -258,7 +281,7 @@ var loadNames = function(){
     savedNames = JSON.parse(savedNames);
 
     for (i = 0; i < savedNames.length; i++){
-        createTaskEl(savedNames[i]);
+        console.log(savedNames[i]);
     }
     
 };
