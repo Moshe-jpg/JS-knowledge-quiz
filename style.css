@@ -25,6 +25,7 @@
 
 .main-content {
     background: var(--primary);
+    box-shadow: 10px 10px 10px var(--fourth);
     height: 80vh;
     width: 85vw;
     text-align: center;
