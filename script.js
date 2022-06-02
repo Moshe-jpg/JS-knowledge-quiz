@@ -80,7 +80,12 @@ var answer3 = document.getElementById("answer3");
 var myBtn = document.querySelector(".my-btn");
 
 // array which will hold the submitted username initials
-var objects = [];
+var objects = JSON.parse(localStorage.getItem("objects")); 
+//JSON.parse is the opposite of JSON.stringify (it turns a json string into a javascript object, in this case an array). This is necessary because localstorage.getItem returns a json string not a javascript object.
+if (!objects){
+    objects = [];
+};
+console.log(`Before Push ${objects}`)
 
 // Submit btn
 var initBtn = document.querySelector("#initial-submit");
@@ -91,8 +96,8 @@ var pushNames = function (){
     event.preventDefault();
     var textValue = textInput.value;
     objects.push(textValue + " " + finalScore);
-    saveObjects();
-    console.log(objects);
+    console.log(`After Push ${objects}`)
+    localStorage.setItem("objects", JSON.stringify(objects));
 }
 
 // A counter to tell you the correct number of answers
@@ -224,18 +229,6 @@ var askQuestion3 = function (){
     var clickThree1False = answer2.addEventListener("click", answeredThree1False);
     var clickThree1False = answer3.addEventListener("click", answeredThree1False);
 };
-
-// Localstorage.setitem finds the item in local storage and replaces it with the new item you are trying to set.
-
-// You need to get the item from local storage and save it to a variable.
-var getObjects = localStorage.getItem("objects", JSON.stringify(objects));
-
-// Then append the data you want to add to the item that you retrieved from local storage.
-
-// save final score to local storage
-var saveObjects = function (){
-   localStorage.setItem("objects", JSON.stringify(objects));
-}
 
 var loadObjects = function (){
     var savedObjects = localStorage.getItem("objects", JSON.stringify(objects));
